@@ -2,19 +2,21 @@
 
 require 'sinatra'
 
-
+error 404 do
+  'Status not found'
+end
 
 get '/' do; end
 
 get '/ci/:job' do |job|
-  response.headers['Cache-Control'] = 'no-cache'
   begin
+    response.headers['Cache-Control'] = 'no-cache'
     status = ENV["#{job.upcase}_STATUS"]
     raise NameError unless status
     content_type 'image/png'
     send_file "public/images/#{status}.png"
   rescue
-    "Status not found: #{job}"
+    404
   end
 end
 
