@@ -10,7 +10,7 @@ get '/' do; end
 
 get '/ci/:job' do |job|
   begin
-    response.headers['Cache-Control'] = 'no-cache'
+    response.headers['Cache-Control'] = 'no-store'
     status = ENV["#{job.upcase}_STATUS"]
     raise NameError unless status
     content_type 'image/png'
