@@ -5,6 +5,7 @@ require 'sinatra'
 get '/' do; end
 
 get '/ci/:job' do |job|
+  headers['Cache-Control'] = 'no-cache'
   begin
     status = ENV["#{job.upcase}_STATUS"]
     raise NameError unless status
