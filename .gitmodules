@@ -1,0 +1,3 @@
+[submodule "travis-assets"]
+	path = travis-assets
+	url = git://github.com/travis-ci/travis-assets.git
