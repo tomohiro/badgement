@@ -17,9 +17,10 @@ get '/' do; end
 
 get '/ci/:job' do |job|
   begin
-    response.headers['Cache-Control'] = 'no-store'
     status = REDIS.get("#{job.upcase}_STATUS")
     raise NameError unless status
+
+    response.headers['Cache-Control'] = 'no-store'
     content_type 'image/png'
     send_file "public/images/#{status}.png"
   rescue NameError
