@@ -1,4 +1,0 @@
-cistatus
-========
-
-CI job status
