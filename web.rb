@@ -22,7 +22,7 @@ get '/ci/:job' do |job|
     raise NameError unless status
     content_type 'image/png'
     send_file "public/images/#{status}.png"
-  rescue
+  rescue NameError
     404
   end
 end
