@@ -7,7 +7,7 @@ configure do
   REDIS = Redis.new(host: uri.host, port: uri.port, password: uri.password)
 end
 
-get '/*' do |label|
+get '/:label' do |label|
   status = REDIS.hget(label, 'status')
   color  = REDIS.hget(label, 'color')
 
