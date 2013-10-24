@@ -11,9 +11,10 @@ end
 
 get '/*' do
   label = params[:splat].first
-  status = REDIS.get(label)
+  status = REDIS.hget(label, 'status')
+  color  = REDIS.hget(label, 'color')
   if status
-    redirect "http://img.shields.io/#{label}/#{status}.png"
+    redirect "http://img.shields.io/#{label}/#{status}.png?color=#{color}"
   else
     redirect "http://img.shields.io/#{label}/undefined.png?color=red"
   end
@@ -21,5 +22,6 @@ end
 
 post '/:label' do |label|
   label = params[:splat].first
-  REDIS.set(label, params[:status])
+  REDIS.hset(label, 'status', params[:status])
+  REDIS.hset(label, 'color', params[:color])
 end
