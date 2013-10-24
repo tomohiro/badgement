@@ -1,4 +1,4 @@
-cistatus
+Badge
 ================================================================================
 
-Save your CI job status, and get status image.
+Save your team status, and get badge image.
