@@ -1,5 +1,3 @@
-# enoding: utf-8
-
 require 'sinatra'
 
 # [Redis To Go | Heroku Dev Center](https://devcenter.heroku.com/articles/redistogo)
