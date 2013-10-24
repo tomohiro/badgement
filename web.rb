@@ -9,8 +9,7 @@ configure do
   REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 end
 
-get '/*' do
-  label = params[:splat].first
+get '/*' do |label|
   status = REDIS.hget(label, 'status')
   color  = REDIS.hget(label, 'color')
   if status
@@ -21,7 +20,8 @@ get '/*' do
 end
 
 post '/:label' do |label|
-  label = params[:splat].first
   REDIS.hset(label, 'status', params[:status])
   REDIS.hset(label, 'color', params[:color])
+
+  "It was saved value is '#{label}/#{status}?color=#{color}'"
 end
