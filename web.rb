@@ -9,25 +9,18 @@ configure do
   REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 end
 
-error 404 do
-  'Status not found'
-end
-
 get '/' do; end
 
-get '/ci/:job' do |job|
+get '/name/:label' do |label|
   begin
-    status = REDIS.get("#{job.upcase}_STATUS")
+    status = REDIS.get(label)
     raise NameError unless status
-
-    response.headers['Cache-Control'] = 'no-store'
-    content_type 'image/png'
-    send_file "public/images/#{status}.png"
+    redirect "http://img.shields.io/#{label}/#{status}.png"
   rescue NameError
-    404
+    redirect "http://img.shields.io/label/error.png?color=red"
   end
 end
 
-post '/ci/:job' do |job|
-  REDIS.set("#{job.upcase}_STATUS", params[:status])
+post '/name/:label' do |label|
+  REDIS.set(label, params[:status])
 end
