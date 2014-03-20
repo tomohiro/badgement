@@ -7,24 +7,22 @@ configure do
   REDIS = Redis.new(host: uri.host, port: uri.port, password: uri.password)
 end
 
-get '/:repository/:branch' do |repository, branch|
-  branch = REDIS.hget(repository, 'branch')
-  label  = REDIS.hget(repository, 'label')
-  status = REDIS.hget(repository, 'status')
-  color  = REDIS.hget(repository, 'color')
+get '/:repository/:branch/:label' do |repository, branch, label|
+  key = "#{repository}:#{branch}:#{label}"
+  status = REDIS.hget(key, 'status')
+  color  = REDIS.hget(key, 'color')
 
-  if branch && label && status
+  if status && color
     redirect "http://img.shields.io/#{label}/#{status}.png?color=#{color}"
   else
     redirect "http://img.shields.io/#{label}/undefined.png?color=red"
   end
 end
 
-post '/:repository/:branch' do |repository, branch|
-  REDIS.hset(repository, 'branch', branch)
-  REDIS.hset(repository, 'label', params[:label])
-  REDIS.hset(repository, 'status', params[:status])
-  REDIS.hset(repository, 'color', params[:color])
+post '/:repository/:branch/:label' do |repository, branch, label|
+  key = "#{repository}:#{branch}:#{label}"
+  REDIS.hset(key, 'status', params[:status])
+  REDIS.hset(key, 'color', params[:color])
 
   "It was saved #{branch} on #{repository}."
 end
