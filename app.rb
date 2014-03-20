@@ -26,5 +26,5 @@ post '/:repository/:branch' do |repository, branch|
   REDIS.hset(repository, 'status', params[:status])
   REDIS.hset(repository, 'color', params[:color])
 
-  "It was saved #{branch} on #{repository}, label: #{label}, status: #{status}, color: #{color}."
+  "It was saved #{branch} on #{repository}."
 end
