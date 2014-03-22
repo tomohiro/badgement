@@ -1,3 +1,4 @@
+require 'open-uri'
 require 'sinatra'
 
 configure do
@@ -7,22 +8,21 @@ configure do
   REDIS = Redis.new(host: uri.host, port: uri.port, password: uri.password)
 end
 
-get '/:repository/:branch/:label' do |repository, branch, label|
-  key = "#{repository}:#{branch}:#{label}"
-  status = REDIS.hget(key, 'status')
-  color  = REDIS.hget(key, 'color')
+get '/:repository/:branch/:subject' do |repository, branch, subject|
+  key = "#{repository}:#{branch}:#{subject}"
+  badge = REDIS.get(key)
 
-  if status && color
-    redirect "http://img.shields.io/#{label}/#{status}.png?color=#{color}"
+  if badge
+    badge
   else
-    redirect "http://img.shields.io/#{label}/undefined.png?color=red"
+    open("http://img.shields.io/badge/#{subject}-undefined-red.svg").read
   end
 end
 
-post '/:repository/:branch/:label' do |repository, branch, label|
-  key = "#{repository}:#{branch}:#{label}"
-  REDIS.hset(key, 'status', params[:status])
-  REDIS.hset(key, 'color', params[:color])
+post '/:repository/:branch/:subject' do |repository, branch, subject|
+  key = "#{repository}:#{branch}:#{subject}"
+  badge = open("http://img.shields.io/badge/#{subject}-#{params[:status]}-#{params[:color]}.svg").read
+  REDIS.set(key, badge)
 
   "It was saved #{branch} on #{repository}."
 end
