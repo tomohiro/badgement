@@ -12,6 +12,8 @@ get '/:repository/:branch/:subject' do |repository, branch, subject|
   key = "#{repository}:#{branch}:#{subject}"
   badge = REDIS.get(key)
 
+  content_type 'image/svg+xml;charset=utf-8'
+
   if badge
     badge
   else
