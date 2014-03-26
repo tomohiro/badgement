@@ -13,6 +13,7 @@ get '/:repository/:branch/:subject' do |repository, branch, subject|
   badge = REDIS.get(key)
 
   content_type 'image/svg+xml;charset=utf-8'
+  cache_control :no_cache
 
   if badge
     badge
