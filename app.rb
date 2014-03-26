@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'securerandom'
 require 'sinatra'
 
 configure do
@@ -14,6 +15,7 @@ get '/:repository/:branch/:subject' do |repository, branch, subject|
 
   content_type 'image/svg+xml;charset=utf-8'
   cache_control :no_cache
+  etag SecureRandom.hex
 
   if badge
     badge
