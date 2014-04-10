@@ -11,10 +11,6 @@ end
 
 get '/:repository/:branch/:subject' do |repository, branch, subject|
   key = "#{repository}:#{branch}:#{subject}"
-  redirect "/badges/#{key}"
-end
-
-get '/badges/:key' do |key|
   badge = REDIS.get(key)
 
   content_type 'image/svg+xml;charset=utf-8'
