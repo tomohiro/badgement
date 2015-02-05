@@ -17,16 +17,12 @@ get '/:repository/:branch/:subject' do |repository, branch, subject|
   cache_control :no_cache
   etag SecureRandom.hex
 
-  if badge
-    badge
-  else
-    open("http://img.shields.io/badge/#{subject}-undefined-red.svg").read
-  end
+  badge || open("https://img.shields.io/badge/#{subject}-undefined-red.svg?style=flat-square").read
 end
 
 post '/:repository/:branch/:subject' do |repository, branch, subject|
   key = "#{repository}:#{branch}:#{subject}"
-  badge = open("http://img.shields.io/badge/#{subject}-#{params[:status]}-#{params[:color]}.svg").read
+  badge = open("https://img.shields.io/badge/#{subject}-#{params[:status]}-#{params[:color]}.svg?style=flat-square").read
   REDIS.set(key, badge)
 
   "It was saved #{branch} on #{repository}."
