@@ -22,7 +22,7 @@ end
 
 post '/:repository/:branch/:subject' do |repository, branch, subject|
   key = "#{repository}:#{branch}:#{subject}"
-  badge = open("https://img.shields.io/badge/#{subject}-#{params[:status]}-#{params[:color]}.svg?style=flat-square").read
+  badge = open("https://img.shields.io/badge/#{subject}-#{URI.encode(params[:status])}-#{params[:color]}.svg?style=flat-square").read
   REDIS.set(key, badge)
 
   "It was saved #{branch} on #{repository}."
