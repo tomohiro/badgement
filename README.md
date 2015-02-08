@@ -9,7 +9,6 @@ Your personal status companion.
 ### Heroku Ready
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-```
 
 
 LICENSE
