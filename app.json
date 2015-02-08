@@ -3,7 +3,5 @@
   "description": "Badgement, your personal status companion",
   "repository": "https://github.com/Tomohiro/badgement",
   "keywords": ["ruby", "sinatra", "badge"],
-  "env": {
-    "addons": ["rediscloud"]
-  }
+  "addons": ["rediscloud"]
 }
