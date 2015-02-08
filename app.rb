@@ -3,9 +3,9 @@ require 'securerandom'
 require 'sinatra'
 
 configure do
-  # [Redis To Go | Heroku Dev Center](https://devcenter.heroku.com/articles/redistogo)
+  # [Redis Cloud | Heroku Dev Center](https://devcenter.heroku.com/articles/rediscloud)
   require 'redis'
-  uri = URI.parse(ENV['REDISTOGO_URL'])
+  uri = URI.parse(ENV['REDISCLOUD_URL'])
   REDIS = Redis.new(host: uri.host, port: uri.port, password: uri.password)
 end
 
