@@ -1,6 +1,6 @@
 {
   "name": "Badgement",
-  "description": "Badgement, your personal status companion",
+  "description": "Your personal status companion",
   "repository": "https://github.com/Tomohiro/badgement",
   "keywords": ["ruby", "sinatra", "badge"],
   "addons": ["rediscloud"]
