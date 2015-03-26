@@ -39,9 +39,11 @@ Add to "Post build task":
 curl ${BUILD_URL}/api/json?tree=result | grep -q "SUCCESS"
 
 if [ $? -eq 0 ]; then
-  curl http://{your-badge-site}.herokuapp.com/{project}/{branch}/{status-name} -X POST -d 'status=passing' -d 'color=brightgreen'
+  curl http://{your-badge-site}.herokuapp.com/{project}/{branch}/{status-name} \
+      -X POST -d 'status=passing' -d 'color=brightgreen'
 else
-  curl http://{your-badge-site}.herokuapp.com/{project}/{branch}/{status-name} -X POST -d 'status=failing' -d 'color=red'
+  curl http://{your-badge-site}.herokuapp.com/{project}/{branch}/{status-name} \
+      -X POST -d 'status=failing' -d 'color=red'
 fi
 ```
 
