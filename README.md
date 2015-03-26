@@ -31,6 +31,20 @@ status    | The status anything you want (e.g. passing, failed, 30%, 85% and so 
 color     | ShieldsIO defined colors (http://shields.io)
 
 
+#### On Jenkins
+
+Add to "Post build task":
+
+```sh
+curl ${BUILD_URL}/api/json?tree=result | grep -q "SUCCESS"
+
+if [ $? -eq 0 ]; then
+  curl http://{your-badge-site}.herokuapp.com/{project}/{branch}/{status-name} -X POST -d 'status=passing' -d 'color=brightgreen'
+else
+  curl http://{your-badge-site}.herokuapp.com/{project}/{branch}/{status-name} -X POST -d 'status=failing' -d 'color=red'
+fi
+```
+
 ### Get saved your personal status
 
 Paste to README at GitHub such as:
